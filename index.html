@@ -43,20 +43,21 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 15px; /* Reduced padding */
             max-width: 100%;
             margin: 0 auto;
+            min-height: 0; /* Prevent container from expanding beyond viewport */
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* Reduced margin */
         }
 
         .header h1 {
             font-size: 24px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* Reduced margin */
             opacity: 0.9;
         }
 
@@ -64,19 +65,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 12px; /* Reduced gap */
             flex-wrap: wrap;
-            margin-bottom: 15px;
+            margin-bottom: 12px; /* Reduced margin */
         }
 
         .connection-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
+            padding: 5px 10px; /* Reduced padding */
             background: rgba(255, 255, 255, 0.08);
             border-radius: 15px;
-            font-size: 13px;
+            font-size: 12px; /* Reduced font size */
             backdrop-filter: blur(5px);
         }
 
@@ -84,10 +85,10 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
+            padding: 5px 10px; /* Reduced padding */
             background: rgba(255, 255, 255, 0.08);
             border-radius: 15px;
-            font-size: 13px;
+            font-size: 12px; /* Reduced font size */
             backdrop-filter: blur(5px);
         }
 
@@ -97,29 +98,30 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-top: -90px;
+            margin: 5px 0; /* Reduced margin */
+            min-height: 0; /* Prevent from expanding */
         }
 
         .speed-value {
-            font-size: 140px; /* Much larger */
+            font-size: 120px; /* Reduced size */
             font-weight: 700;
             line-height: 0.9;
             margin-bottom: 5px;
             text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
-            width: 80%; /* 80% width */
+            width: 80%;
             text-align: center;
         }
 
         .speed-unit {
-            font-size: 36px; /* Larger */
+            font-size: 32px; /* Reduced size */
             opacity: 0.8;
             margin-left: 5px;
             font-weight: 300;
         }
 
         .emoji-indicator {
-            font-size: 120px;
-            margin: 15px 0;
+            font-size: 100px; /* Reduced size */
+            margin: 10px 0; /* Reduced margin */
             animation: bounce 2s infinite;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
@@ -134,22 +136,22 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin: 10px 0;
+            margin: 8px 0; /* Reduced margin */
         }
 
         .status-text {
-            font-size: 18px;
+            font-size: 16px; /* Reduced size */
             font-weight: 500;
             opacity: 0.9;
         }
 
         .speed-bar-container {
             width: 100%;
-            height: 40px;
+            height: 35px; /* Reduced height */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             overflow: hidden;
-            margin: 20px 0;
+            margin: 15px 0; /* Reduced margin */
             position: relative;
         }
 
@@ -189,15 +191,16 @@
         .info-cards {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-top: -80px;
+            gap: 8px; /* Reduced gap */
+            margin-top: auto; /* Changed from fixed margin to auto */
+            padding-bottom: 5px; /* Reduced padding */
         }
 
         .info-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 15px;
+            padding: 12px; /* Reduced padding */
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             text-align: center;
@@ -209,15 +212,15 @@
         }
 
         .info-card p {
-            font-size: 16px;
-            line-height: 1.4;
+            font-size: 14px; /* Reduced font size */
+            line-height: 1.3; /* Reduced line height */
         }
 
         .ip-info {
-            font-size: 14px;
+            font-size: 12px; /* Reduced font size */
             opacity: 0.8;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px; /* Reduced margin */
             padding: 0;
         }
 
@@ -245,22 +248,111 @@
         /* Responsive adjustments */
         @media (max-height: 700px) {
             .speed-value {
-                font-size: 110px;
+                font-size: 100px;
             }
             .header h1 {
                 font-size: 20px;
             }
             .emoji-indicator {
-                font-size: 90px;
+                font-size: 80px;
+            }
+            .status-text {
+                font-size: 14px;
             }
         }
 
         @media (max-height: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .header {
+                margin-bottom: 10px;
+            }
+            .header h1 {
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+            .connection-info {
+                margin-bottom: 8px;
+                gap: 8px;
+            }
             .speed-value {
-                font-size: 90px;
+                font-size: 80px;
             }
             .speed-unit {
-                font-size: 28px;
+                font-size: 24px;
+            }
+            .emoji-indicator {
+                font-size: 70px;
+                margin: 5px 0;
+            }
+            .status-container {
+                margin: 5px 0;
+            }
+            .status-text {
+                font-size: 13px;
+            }
+            .speed-bar-container {
+                height: 30px;
+                margin: 10px 0;
+            }
+            .info-card {
+                padding: 8px;
+            }
+            .info-card p {
+                font-size: 12px;
+            }
+            .ip-info {
+                font-size: 11px;
+                margin-top: 5px;
+            }
+        }
+
+        /* Extra small height devices */
+        @media (max-height: 500px) {
+            .container {
+                padding: 8px;
+            }
+            .header {
+                margin-bottom: 5px;
+            }
+            .header h1 {
+                font-size: 16px;
+            }
+            .connection-info {
+                margin-bottom: 5px;
+            }
+            .speed-value {
+                font-size: 70px;
+            }
+            .speed-unit {
+                font-size: 20px;
+            }
+            .emoji-indicator {
+                font-size: 60px;
+                margin: 3px 0;
+            }
+            .status-text {
+                font-size: 12px;
+            }
+            .speed-bar-container {
+                height: 25px;
+                margin: 8px 0;
+            }
+            .info-cards {
+                gap: 5px;
+                margin-top: auto;
+            }
+            .info-card {
+                padding: 6px;
+            }
+            .info-card p {
+                font-size: 11px;
+                line-height: 1.2;
+            }
+            .ip-info {
+                font-size: 10px;
+                margin-top: 3px;
             }
         }
     </style>
