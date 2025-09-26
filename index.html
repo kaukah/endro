@@ -45,7 +45,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 12px; /* Further reduced padding */
+            padding: 15px; /* Increased padding back */
             max-width: 100%;
             margin: 0 auto;
             min-height: 0; /* Prevent container from expanding beyond viewport */
@@ -53,13 +53,13 @@
 
         .header {
             text-align: center;
-            margin-bottom: 10px; /* Further reduced margin */
+            margin-bottom: 15px; /* Increased margin */
         }
 
         .header h1 {
-            font-size: 20px; /* Reduced size */
+            font-size: 24px; /* Increased size */
             font-weight: 600;
-            margin-bottom: 5px; /* Further reduced margin */
+            margin-bottom: 8px; /* Increased margin */
             opacity: 0.9;
         }
 
@@ -67,30 +67,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px; /* Further reduced gap */
+            gap: 12px; /* Increased gap */
             flex-wrap: wrap;
-            margin-bottom: 8px; /* Further reduced margin */
+            margin-bottom: 12px; /* Increased margin */
         }
 
         .connection-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px; /* Reduced gap */
-            padding: 4px 8px; /* Further reduced padding */
+            gap: 6px; /* Increased gap */
+            padding: 6px 12px; /* Increased padding */
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 12px; /* Reduced border radius */
-            font-size: 11px; /* Further reduced font size */
+            border-radius: 15px; /* Increased border radius */
+            font-size: 13px; /* Increased font size */
             backdrop-filter: blur(5px);
         }
 
         .streaming-recommendation {
             display: inline-flex;
             align-items: center;
-            gap: 4px; /* Reduced gap */
-            padding: 4px 8px; /* Further reduced padding */
+            gap: 6px; /* Increased gap */
+            padding: 6px 12px; /* Increased padding */
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 12px; /* Reduced border radius */
-            font-size: 11px; /* Further reduced font size */
+            border-radius: 15px; /* Increased border radius */
+            font-size: 13px; /* Increased font size */
             backdrop-filter: blur(5px);
         }
 
@@ -100,67 +100,67 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 3px 0; /* Further reduced margin */
+            margin: 8px 0; /* Increased margin */
             min-height: 0; /* Prevent from expanding */
         }
 
         .speed-value {
-            font-size: 100px; /* Further reduced size */
+            font-size: 130px; /* Increased size */
             font-weight: 700;
-            line-height: 0.85; /* Reduced line height */
-            margin-bottom: 3px; /* Further reduced margin */
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-            width: 85%; /* Increased width */
+            line-height: 0.9; /* Adjusted line height */
+            margin-bottom: 5px;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+            width: 80%; /* Adjusted width */
             text-align: center;
         }
 
         .speed-unit {
-            font-size: 28px; /* Further reduced size */
+            font-size: 36px; /* Increased size */
             opacity: 0.8;
-            margin-left: 3px; /* Reduced margin */
+            margin-left: 5px;
             font-weight: 300;
         }
 
         .emoji-indicator {
-            font-size: 80px; /* Further reduced size */
-            margin: 5px 0; /* Further reduced margin */
+            font-size: 110px; /* Increased size */
+            margin: 12px 0; /* Increased margin */
             animation: bounce 2s infinite;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); } /* Reduced bounce height */
+            50% { transform: translateY(-15px); }
         }
 
         .status-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px; /* Reduced gap */
-            margin: 5px 0; /* Further reduced margin */
+            gap: 8px; /* Increased gap */
+            margin: 10px 0; /* Increased margin */
         }
 
         .status-text {
-            font-size: 14px; /* Further reduced size */
+            font-size: 18px; /* Increased size */
             font-weight: 500;
             opacity: 0.9;
         }
 
         .speed-bar-container {
             width: 100%;
-            height: 30px; /* Further reduced height */
+            height: 40px; /* Increased height */
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            margin: 10px 0; /* Further reduced margin */
+            margin: 15px 0; /* Increased margin */
             position: relative;
         }
 
         .speed-bar {
             height: 100%;
             background: linear-gradient(90deg, #00ff88 0%, #00ccff 100%);
-            border-radius: 15px;
+            border-radius: 20px;
             transition: width 0.5s ease;
             position: relative;
             overflow: hidden;
@@ -185,24 +185,24 @@
         .speed-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 11px; /* Reduced font size */
+            font-size: 12px; /* Increased font size */
             opacity: 0.6;
-            margin-top: 3px; /* Reduced margin */
+            margin-top: 5px;
         }
 
         .info-cards {
             display: flex;
             flex-direction: column;
-            gap: 6px; /* Further reduced gap */
-            margin-top: auto; /* Changed from fixed margin to auto */
-            padding-bottom: 5px; /* Reduced padding */
+            gap: 10px; /* Increased gap */
+            margin-top: auto;
+            padding-bottom: 8px; /* Increased padding */
         }
 
         .info-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 12px; /* Reduced border radius */
-            padding: 8px; /* Further reduced padding */
+            border-radius: 15px;
+            padding: 12px; /* Increased padding */
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             text-align: center;
@@ -210,27 +210,27 @@
 
         .info-card:hover {
             background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-1px); /* Reduced transform */
+            transform: translateY(-2px);
         }
 
         .info-card p {
-            font-size: 12px; /* Further reduced font size */
-            line-height: 1.2; /* Further reduced line height */
+            font-size: 16px; /* Increased font size */
+            line-height: 1.4; /* Increased line height */
         }
 
         .ip-info {
-            font-size: 11px; /* Further reduced font size */
+            font-size: 14px; /* Increased font size */
             opacity: 0.8;
             text-align: center;
-            margin-top: 5px; /* Further reduced margin */
+            margin-top: 8px; /* Increased margin */
             padding: 0;
-            padding-bottom: env(safe-area-inset-bottom, 10px); /* Add safe area padding */
+            padding-bottom: env(safe-area-inset-bottom, 15px); /* Add safe area padding */
         }
 
         .pulse {
             display: inline-block;
-            width: 6px; /* Reduced size */
-            height: 6px; /* Reduced size */
+            width: 8px; /* Increased size */
+            height: 8px; /* Increased size */
             background: #00ff88;
             border-radius: 50%;
             animation: pulse 2s infinite;
@@ -241,7 +241,7 @@
                 box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
             }
             70% {
-                box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); /* Reduced shadow */
+                box-shadow: 0 0 0 10px rgba(0, 255, 136, 0);
             }
             100% {
                 box-shadow: 0 0 0 0 rgba(0, 255, 136, 0);
@@ -251,34 +251,124 @@
         /* Responsive adjustments */
         @media (max-height: 700px) {
             .speed-value {
-                font-size: 85px;
+                font-size: 110px;
             }
             .header h1 {
-                font-size: 18px;
+                font-size: 22px;
             }
             .emoji-indicator {
-                font-size: 70px;
+                font-size: 95px;
             }
             .status-text {
+                font-size: 16px;
+            }
+            .speed-bar-container {
+                height: 35px;
+            }
+            .info-card p {
+                font-size: 15px;
+            }
+            .ip-info {
                 font-size: 13px;
             }
         }
 
         @media (max-height: 600px) {
             .container {
-                padding: 8px;
+                padding: 12px;
             }
             .header {
-                margin-bottom: 8px;
+                margin-bottom: 12px;
             }
             .header h1 {
-                font-size: 16px;
-                margin-bottom: 3px;
+                font-size: 20px;
+                margin-bottom: 6px;
             }
             .connection-info {
-                margin-bottom: 6px;
-                gap: 6px;
+                margin-bottom: 10px;
+                gap: 10px;
             }
+            .speed-value {
+                font-size: 95px;
+            }
+            .speed-unit {
+                font-size: 28px;
+            }
+            .emoji-indicator {
+                font-size: 80px;
+                margin: 8px 0;
+            }
+            .status-container {
+                margin: 8px 0;
+            }
+            .status-text {
+                font-size: 15px;
+            }
+            .speed-bar-container {
+                height: 32px;
+                margin: 12px 0;
+            }
+            .info-card {
+                padding: 10px;
+            }
+            .info-card p {
+                font-size: 14px;
+            }
+            .ip-info {
+                font-size: 12px;
+                margin-top: 6px;
+            }
+        }
+
+        /* Extra small height devices */
+        @media (max-height: 500px) {
+            .container {
+                padding: 10px;
+            }
+            .header {
+                margin-bottom: 10px;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .connection-info {
+                margin-bottom: 8px;
+            }
+            .speed-value {
+                font-size: 80px;
+            }
+            .speed-unit {
+                font-size: 24px;
+            }
+            .emoji-indicator {
+                font-size: 70px;
+                margin: 6px 0;
+            }
+            .status-text {
+                font-size: 14px;
+            }
+            .speed-bar-container {
+                height: 28px;
+                margin: 10px 0;
+            }
+            .info-cards {
+                gap: 8px;
+            }
+            .info-card {
+                padding: 8px;
+            }
+            .info-card p {
+                font-size: 13px;
+                line-height: 1.3;
+            }
+            .ip-info {
+                font-size: 11px;
+                margin-top: 5px;
+            }
+        }
+
+        /* Very small devices */
+        @media (max-height: 400px) {
             .speed-value {
                 font-size: 70px;
             }
@@ -287,96 +377,18 @@
             }
             .emoji-indicator {
                 font-size: 60px;
-                margin: 3px 0;
-            }
-            .status-container {
-                margin: 3px 0;
             }
             .status-text {
-                font-size: 12px;
+                font-size: 13px;
             }
             .speed-bar-container {
                 height: 25px;
-                margin: 8px 0;
-            }
-            .info-card {
-                padding: 6px;
             }
             .info-card p {
-                font-size: 11px;
+                font-size: 12px;
             }
             .ip-info {
                 font-size: 10px;
-                margin-top: 3px;
-            }
-        }
-
-        /* Extra small height devices */
-        @media (max-height: 500px) {
-            .container {
-                padding: 6px;
-            }
-            .header {
-                margin-bottom: 5px;
-            }
-            .header h1 {
-                font-size: 14px;
-            }
-            .connection-info {
-                margin-bottom: 4px;
-            }
-            .speed-value {
-                font-size: 60px;
-            }
-            .speed-unit {
-                font-size: 18px;
-            }
-            .emoji-indicator {
-                font-size: 50px;
-                margin: 2px 0;
-            }
-            .status-text {
-                font-size: 11px;
-            }
-            .speed-bar-container {
-                height: 20px;
-                margin: 6px 0;
-            }
-            .info-cards {
-                gap: 4px;
-            }
-            .info-card {
-                padding: 4px;
-            }
-            .info-card p {
-                font-size: 10px;
-                line-height: 1.1;
-            }
-            .ip-info {
-                font-size: 9px;
-                margin-top: 2px;
-            }
-        }
-
-        /* Very small devices */
-        @media (max-height: 400px) {
-            .speed-value {
-                font-size: 50px;
-            }
-            .speed-unit {
-                font-size: 16px;
-            }
-            .emoji-indicator {
-                font-size: 40px;
-            }
-            .status-text {
-                font-size: 10px;
-            }
-            .info-card p {
-                font-size: 9px;
-            }
-            .ip-info {
-                font-size: 8px;
             }
         }
     </style>
@@ -384,7 +396,7 @@
 <body class="poor">
     <div class="container">
         <div class="header">
-            <h1>🚀 Realtime Internet Speed 2</h1>
+            <h1>🚀 Realtime Internet Speed</h1>
             <div class="connection-info">
                 <div id="connection-type" class="connection-badge">📶 Mendeteksi...</div>
                 <div id="network-type" class="connection-badge">📡 Mendeteksi...</div>
