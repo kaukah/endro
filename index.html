@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Internet Speed Monitor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s ease;
+        }
+
+        /* Background states - Fixed colors */
+        body.excellent {
+            background: linear-gradient(135deg, #0a2d6b 0%, #1a5bab 100%); /* Blue for best */
+        }
+
+        body.good {
+            background: linear-gradient(135deg, #0a4d2e 0%, #1a7d4a 100%); /* Green for good */
+        }
+
+        body.fair {
+            background: linear-gradient(135deg, #6b4a1a 0%, #9b6d2d 100%); /* Orange for fair */
+        }
+
+        body.poor {
+            background: linear-gradient(135deg, #6b1a1a 0%, #9b2d2d 100%); /* Red for poor */
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 10px;
+        }
+
+        .connection-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .connection-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            font-size: 13px;
+            backdrop-filter: blur(5px);
+        }
+
+        .speed-display {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .speed-value {
+            font-size: 140px; /* Much larger */
+            font-weight: 700;
+            line-height: 0.9;
+            margin-bottom: 5px;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+            width: 80%; /* 80% width */
+            text-align: center;
+        }
+
+        .speed-unit {
+            font-size: 36px; /* Larger */
+            opacity: 0.8;
+            margin-left: 5px;
+            font-weight: 300;
+        }
+
+        .emoji-indicator {
+            font-size: 120px;
+            margin: 15px 0;
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .speed-bar-container {
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .speed-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88 0%, #00ccff 100%);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .speed-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .speed-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        .streaming-recommendation {
+            text-align: center;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            font-size: 16px;
+            backdrop-filter: blur(5px);
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .info-card h3 {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .info-card p {
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .ip-info {
+            font-size: 20px !important;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 255, 136, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0);
+            }
+        }
+
+        .timestamp {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-height: 700px) {
+            .speed-value {
+                font-size: 110px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .emoji-indicator {
+                font-size: 90px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .speed-value {
+                font-size: 90px;
+            }
+            .speed-unit {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Internet Speed Monitor</h1>
+            <div class="status-indicator">
+                <span class="pulse"></span>
+                <span id="status-text">Mengukur...</span>
+            </div>
+            <div class="connection-info">
+                <div id="connection-type" class="connection-badge">📶 Mendeteksi...</div>
+                <div id="network-type" class="connection-badge">📡 Mendeteksi...</div>
+            </div>
+        </div>
+
+        <div class="speed-display">
+            <div class="speed-value">
+                <span id="speed-number">0.0</span>
+                <span class="speed-unit">Mbps</span>
+            </div>
+            <div class="emoji-indicator" id="emoji-indicator">📶</div>
+            
+            <div class="streaming-recommendation" id="streaming-recommendation">
+                Menunggu pengukuran kecepatan...
+            </div>
+            
+            <div class="speed-bar-container">
+                <div class="speed-bar" id="speed-bar" style="width: 0%"></div>
+            </div>
+            <div class="speed-labels">
+ 
+            </div>
+        </div>
+
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>🔋 Baterai</h3>
+                <p class="battery">Memuat...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🌎 IP Address</h3>
+                <p class="ip-info">Memuat...</p>
+            </div>
+        </div>
+        
+        <div class="timestamp" id="timestamp">Terakhir update: --:--:--</div>
+    </div>
+
+    <script>
+        // =============================
+        // SPEED TEST FUNCTION
+        // =============================
+        let lastSpeed = 0;
+        const speedHistory = [];
+        
+        function measureSpeed() {
+            const startTime = performance.now();
+            const fileSize = 500000; // 500KB
+            const imageUrl = `https://picsum.photos/seed/${Date.now()}/800/600.jpg`;
+            
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = function() {
+                    const endTime = performance.now();
+                    const duration = (endTime - startTime) / 1000;
+                    const speed = (fileSize * 8) / (duration * 1000000); // Convert to Mbps
+                    
+                    // Smooth the speed reading
+                    speedHistory.push(speed);
+                    if (speedHistory.length > 5) speedHistory.shift();
+                    const avgSpeed = speedHistory.reduce((a, b) => a + b, 0) / speedHistory.length;
+                    
+                    resolve(Math.min(avgSpeed, 10)); // Cap at 10 Mbps
+                };
+                img.onerror = function() {
+                    resolve(lastSpeed); // Use last known speed on error
+                };
+                img.src = imageUrl + '?t=' + Date.now();
+            });
+        }
+
+        function updateSpeedDisplay(speed) {
+            const speedNumber = document.getElementById('speed-number');
+            const speedBar = document.getElementById('speed-bar');
+            const statusText = document.getElementById('status-text');
+            const emojiIndicator = document.getElementById('emoji-indicator');
+            const body = document.body;
+            const streamingRecommendation = document.getElementById('streaming-recommendation');
+            const timestamp = document.getElementById('timestamp');
+            
+            // Update speed number
+            speedNumber.textContent = speed.toFixed(1);
+            
+            // Update speed bar
+            const barWidth = (speed / 10) * 100;
+            speedBar.style.width = barWidth + '%';
+            
+            // Update timestamp
+            const now = new Date();
+            timestamp.textContent = `Terakhir update: ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            // Update status and visuals based on speed
+            if (speed >= 9) {
+                statusText.textContent = 'Internet Luar Biasa! ✨';
+                emojiIndicator.textContent = '🚀';
+                body.className = 'excellent'; // Blue for best
+                streamingRecommendation.textContent = '✅ streaming 4K/60fps';
+            } else if (speed >= 5) {
+                statusText.textContent = 'Internet Bagus 👍';
+                emojiIndicator.textContent = '😊';
+                body.className = 'good'; // Green for good
+                streamingRecommendation.textContent = '✅ streaming 1080p/60fps';
+            } else if (speed >= 3) {
+                statusText.textContent = 'Internet Cukup 🔄';
+                emojiIndicator.textContent = '🤔';
+                body.className = 'fair'; // Orange for fair
+                streamingRecommendation.textContent = '⚠️ streaming 720p/30fps';
+            } else if (speed >= 1) {
+                statusText.textContent = 'Internet Lemot 😅';
+                emojiIndicator.textContent = '🐌';
+                body.className = 'poor'; // Red for poor
+                streamingRecommendation.textContent = '❌ streaming 480p';
+            } else {
+                statusText.textContent = 'Internet Sangat Lemot 🔻';
+                emojiIndicator.textContent = '😵';
+                body.className = 'poor'; // Red for poor
+                streamingRecommendation.textContent = '❌ Tidak disarankan untuk streaming';
+            }
+            
+            lastSpeed = speed;
+        }
+
+        // Fixed connection detection logic
+        function updateConnectionInfo() {
+            const connectionType = document.getElementById('connection-type');
+            const networkType = document.getElementById('network-type');
+            
+            // Try to get connection info from Network Information API
+            const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            
+            if (conn) {
+                // Connection type (medium: WiFi/Cellular/Ethernet)
+                if (conn.type) {
+                    switch(conn.type) {
+                        case 'cellular':
+                            connectionType.innerHTML = '📱 Cellular';
+                            break;
+                        case 'wifi':
+                            connectionType.innerHTML = '📶 WiFi';
+                            break;
+                        case 'ethernet':
+                            connectionType.innerHTML = '🖥️ Ethernet';
+                            break;
+                        case 'bluetooth':
+                            connectionType.innerHTML = '🔵 Bluetooth';
+                            break;
+                        case 'wimax':
+                            connectionType.innerHTML = '📡 WiMAX';
+                            break;
+                        case 'other':
+                            connectionType.innerHTML = '🌐 Other';
+                            break;
+                        default:
+                            connectionType.innerHTML = '🌐 Unknown';
+                    }
+                } else {
+                    // If type is not available, try to infer
+                    const userAgent = navigator.userAgent.toLowerCase();
+                    if (/mobile|android|iphone|ipad|ipod/.test(userAgent)) {
+                        connectionType.innerHTML = '📱 Mobile';
+                    } else {
+                        connectionType.innerHTML = '📶 WiFi';
+                    }
+                }
+                
+                // Network type (technology: 4G/3G/2G/WiFi)
+                if (conn.type === 'cellular' || conn.type === 'wifi' || !conn.type) {
+                    if (conn.effectiveType) {
+                        switch(conn.effectiveType) {
+                            case '4g':
+                                networkType.innerHTML = '🚀 4G/LTE';
+                                break;
+                            case '3g':
+                                networkType.innerHTML = '📡 3G';
+                                break;
+                            case '2g':
+                                networkType.innerHTML = '📶 2G';
+                                break;
+                            case 'slow-2g':
+                                networkType.innerHTML = '🐌 Slow 2G';
+                                break;
+                            default:
+                                networkType.innerHTML = '🌐 Unknown';
+                        }
+                    } else {
+                        // Estimate based on downlink
+                        if (conn.downlink >= 10) {
+                            networkType.innerHTML = '🚀 5G/4G+';
+                        } else if (conn.downlink >= 5) {
+                            networkType.innerHTML = '🚀 4G/LTE';
+                        } else if (conn.downlink >= 1) {
+                            networkType.innerHTML = '📡 3G';
+                        } else if (conn.downlink >= 0.1) {
+                            networkType.innerHTML = '📶 2G';
+                        } else {
+                            networkType.innerHTML = '🐌 Slow';
+                        }
+                    }
+                } else if (conn.type === 'ethernet') {
+                    networkType.innerHTML = '🖥️ Kabel';
+                } else if (conn.type === 'wifi') {
+                    networkType.innerHTML = '📶 WiFi';
+                } else {
+                    networkType.innerHTML = '🌐 Unknown';
+                }
+            } else {
+                // Fallback detection using other methods
+                const userAgent = navigator.userAgent.toLowerCase();
+                
+                // Check if mobile device
+                if (/mobile|android|iphone|ipad|ipod/.test(userAgent)) {
+                    connectionType.innerHTML = '📱 Cellular';
+                    
+                    // Try to detect network technology from user agent
+                    if (userAgent.includes('5g')) {
+                        networkType.innerHTML = '🚀 5G';
+                    } else if (userAgent.includes('4g') || userAgent.includes('lte')) {
+                        networkType.innerHTML = '🚀 4G/LTE';
+                    } else if (userAgent.includes('3g')) {
+                        networkType.innerHTML = '📡 3G';
+                    } else if (userAgent.includes('2g')) {
+                        networkType.innerHTML = '📶 2G';
+                    } else {
+                        // Default to 4G for modern mobile devices
+                        networkType.innerHTML = '📡 4G/LTE';
+                    }
+                } else {
+                    // Desktop device
+                    connectionType.innerHTML = '📶 WiFi';
+                    networkType.innerHTML = '🌐 Broadband';
+                }
+            }
+            
+            // Handle offline status
+            if (!navigator.onLine) {
+                connectionType.innerHTML = '🚫 Offline';
+                networkType.innerHTML = '🚫 No Connection';
+            }
+        }
+
+        // Start speed monitoring
+        async function startSpeedMonitoring() {
+            updateConnectionInfo();
+            while (true) {
+                const speed = await measureSpeed();
+                updateSpeedDisplay(speed);
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+
+        // =============================
+        // BATTERY INFO (lengkap)
+        // =============================
+        function initBattery() {
+            const el = document.querySelector('.battery');
+            if (!navigator.getBattery) {
+                el.textContent = "-";
+                return;
+            }
+            navigator.getBattery().then(function(battery) {
+                function updateBattery() {
+                    let level = Math.round(battery.level * 100);
+                    let charging = battery.charging ? "Charging" : "Not Charging";
+                    let time = "";
+                    if (battery.charging && battery.chargingTime !== Infinity) {
+                        let h = Math.floor(battery.chargingTime / 3600);
+                        let m = Math.floor((battery.chargingTime % 3600) / 60);
+                        time = `Baterai Full: ${h} jam ${m} menit`;
+                    } else if (!battery.charging && battery.dischargingTime !== Infinity) {
+                        let h = Math.floor(battery.dischargingTime / 3600);
+                        let m = Math.floor((battery.dischargingTime % 3600) / 60);
+                        time = ` ${h} jam ${m} menit`;
+                    }
+                    el.innerHTML = `
+                        <div>🔋 ${level}% ⚡ ${charging} ⏳ ${time}</div>
+                    `;
+                }
+                updateBattery();
+                battery.addEventListener('levelchange', updateBattery);
+                battery.addEventListener('chargingchange', updateBattery);
+                battery.addEventListener('chargingtimechange', updateBattery);
+                battery.addEventListener('dischargingtimechange', updateBattery);
+            });
+        }
+
+        // =============================
+        // IP INFO
+        // =============================
+        async function initIP() {
+            const el = document.querySelector('.ip-info');
+            try {
+                const res = await fetch("https://api.ipify.org?format=json");
+                const data = await res.json();
+                el.innerHTML = `🌎 IP: ${data.ip}`;
+            } catch (err) {
+                el.innerHTML = "🌎 IP: Error";
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initBattery();
+            initIP();
+            startSpeedMonitoring();
+            
+            // Update connection info periodically
+            setInterval(updateConnectionInfo, 5000);
+            
+            // Listen for online/offline events
+            window.addEventListener('online', updateConnectionInfo);
+            window.addEventListener('offline', updateConnectionInfo);
+        });
+    </script>
+</body>
+</html>
